@@ -87,6 +87,7 @@ productManager.addProduct(AsusTuf408032);
 productManager.addProduct(AcerNitro); //prueba agregar producto que ya existe
 
 productManager.updateProduct(1, new Product("Notebook Acer Nitro updateado", "Notebook gamer Acer Nitro 32gb 1TB", 500000, "AP5000NT", 50, "./assets/Acer-Nitro.jpg"));
+productManager.delete(2);
 
 productManager.getProducts();
 
