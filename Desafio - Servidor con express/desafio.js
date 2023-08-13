@@ -85,9 +85,7 @@ app.get('/', (req, res) => {
 app.get('/products', async (req, res) => {
     const { limit } = req.query
     const prods = await productManager.getProducts();
-    if (limit) { res.send(prods.slice(0, limit)); }
-
-    res.send(prods);
+    limit? res.send(prods.slice(0, limit)) : res.send(prods);
 })
 
 app.get('/products/:id', async (req, res) => res.send(await productManager.getProductById(parseInt(req.params.id))));
