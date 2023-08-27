@@ -1,0 +1,19 @@
+{
+    "name": "primera-pre-entrega-de-proyecto-final",
+    "version": "1.0.0",
+    "description": "primera pre-entrega de proyecto final",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+      "dev": "nodemon src/index.js"
+    },
+    "keywords": [],
+    "author": "Cristian Aranguren",
+    "license": "ISC",
+    "devDependencies": {
+      "nodemon": "^3.0.1"
+    },
+    "dependencies": {
+      "express": "^4.18.2"
+    }
+  }
