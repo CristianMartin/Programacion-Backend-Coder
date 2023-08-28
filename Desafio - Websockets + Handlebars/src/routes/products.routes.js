@@ -1,8 +1,15 @@
 import { Router } from "express";
-import ProductManager from '../models/ProductManager';
+import ProductManager from '../models/ProductManager.js';
 
 const prodsRouter = Router();
-const productManager = new ProductManager('../productos.json');
+const productManager = new ProductManager('./productos.json');
+
+prodsRouter.get('/all', async (req, res) => {
+    res.render('home', {
+        title: "All Products",
+        products: await productManager.getProducts()
+    })
+})
 
 prodsRouter.get('/', async (req, res) => {
     const { limit } = req.query
