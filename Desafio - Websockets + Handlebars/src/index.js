@@ -49,14 +49,6 @@ io.on('connection', (socket) => {
 app.use('/api/products', prodsRouter);
 app.use('/api/cart', cartRouter);
 
-app.get('/static', (req, res) => {
-    res.render('realTimeProducts', {
-        css: "style.css",
-        title: "RealTimeProducts",
-        js: "realTimeProducts.js"
-    })
-})
-
 app.get('/', (req, res) => {
     res.send("¡Bienvenido al Desafio - Websockets + Handlebars!");
 })

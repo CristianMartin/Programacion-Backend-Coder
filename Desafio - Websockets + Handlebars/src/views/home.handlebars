@@ -1,12 +1,20 @@
-<h1>{{title}}</h1>
-{{#each products}}
-  <div>
-      <p>{{this.id}}</p>
-      <p>{{this.title}}</p>
-      <p>{{this.description}}</p>
-      <p>{{this.code}}</p>
-      <p>{{this.price}}</p>
-      <p>{{this.stock}}</p>
-      <p>{{this.thumbnail}}</p>
-  </div>
-{{/each}}
+<h1 class="text-center text-uppercase text-muted m-4">{{title}}</h1>
+<div class="d-flex flex-row justify-content-center">
+  {{#each products}}
+    <div class="card card-w ms-4">
+        <div>
+          <img src={{this.thumbnail}} class="card-img-top p-4" alt={{this.title}}>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{this.title}}</h5>
+          <p class="card-text">{{this.description}}</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: {{this.id}}</li>
+            <li class="list-group-item">CODE: {{this.code}}</li>
+            <li class="list-group-item">PRICE: {{this.price}}</li>
+            <li class="list-group-item">STOCK: {{this.stock}}</li>
+          </ul>
+        </div>
+    </div>
+  {{/each}}
+</div>
