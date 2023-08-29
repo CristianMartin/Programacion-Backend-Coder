@@ -6,6 +6,7 @@ import path from 'path';
 import { __dirname } from './path.js';
 import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
+import ProductManager from './models/ProductManager.js';
 
 const PORT = 8081;
 const app = express();
@@ -35,13 +36,13 @@ app.set('views', path.resolve(__dirname, './views'));//Rutas de mis vistas
 
 //Server de Socket.io
 const io = new Server(serverExpress);
-const prods = [];
+const productManager = new ProductManager('./productos.json');
 io.on('connection', (socket) => {
     console.log('Servidor Socket.io conectado');
 
-    socket.on('nuevoProducto', (nuevoProd) => {
-        prods.push(nuevoProd)
-        socket.emit('prods', prods)
+    socket.on('nuevoProducto', async (nuevoProd) => {
+        await productManager.addProduct(nuevoProd);
+        socket.emit('prods', await productManager.getProducts());
     })
 })
 

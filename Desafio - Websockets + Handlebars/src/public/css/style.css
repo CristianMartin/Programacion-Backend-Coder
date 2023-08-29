@@ -16,6 +16,10 @@ form {
     border: 1px solid #ccc;
 }
 
+label {
+    color: gray;
+}
+
 label,
 input {
     display: block;
@@ -29,8 +33,6 @@ input {
 }
 
 button {
-    background-color: burlywood;
-    color: #fff;
     padding: 10px 20px;
     border: none;
     border-radius: 3px;
