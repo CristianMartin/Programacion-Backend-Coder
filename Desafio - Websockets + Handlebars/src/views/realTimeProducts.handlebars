@@ -1,17 +1,29 @@
-<h2 class="text-uppercase text-center text-muted m-4">Crear Nuevo Producto</h2>
-<form class="card p-4" id="idForm">
-    <label for="title">Title</label>
-    <input type="text" required name="title" id="title">
-    <label for="description">Description</label>
-    <input type="text" required name="description" id="description">
-    <label for="price">Price</label>
-    <input type="number" required name="price" id="price">
-    <label for="stock">Stock</label>
-    <input type="number" required name="stock" id="stock">
-    <label for="code">Code</label>
-    <input type="text" required name="code" id="code">
-    <button class="btn btn-dark mt-3" type="submit">Enviar</button>
-</form><br><br>
+<div class="container d-flex justify-content-around">
+    <div>
+        <h2 class="text-uppercase text-center text-muted m-4">Crear Nuevo Producto</h2>
+        <form class="card p-4" id="addProductForm">
+            <label for="title">Title</label>
+            <input type="text" required name="title" id="title">
+            <label for="description">Description</label>
+            <input type="text" required name="description" id="description">
+            <label for="price">Price</label>
+            <input type="number" required name="price" id="price">
+            <label for="stock">Stock</label>
+            <input type="number" required name="stock" id="stock">
+            <label for="code">Code</label>
+            <input type="text" required name="code" id="code">
+            <button class="btn btn-dark mt-3" type="submit">Enviar</button>
+        </form><br><br>
+    </div>
+    <div>
+        <h2 class="text-uppercase text-center text-muted m-4">Eliminar producto</h2>
+        <form class="card" id="deleteProductForm">
+            <label for="id">Id</label>
+            <input type="number" name="id" id="id"> 
+            <button class="btn btn-danger mt-3" type="submit">Eliminar Producto</button>
+        </form>
+    </div>
+</div>
 
 <h2 class="text-uppercase text-center text-muted m-4">Productos</h2>
 <div id="products" class="d-flex flex-row justify-content-center">

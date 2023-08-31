@@ -47,7 +47,7 @@ export default class ProductManager {
     async delete(id) {
         const prods = JSON.parse(await fs.readFile(this.path, 'utf-8'));
         const prod = prods.find(prod => prod.id === id);
-
+        
         if(prod) {
             await fs.writeFile(this.path, JSON.stringify(prods.filter(product => product.id != id)));
         } else {

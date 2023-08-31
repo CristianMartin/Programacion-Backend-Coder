@@ -1,12 +1,21 @@
 const socket = io();
-const form = document.getElementById('idForm');
+const addProductForm = document.getElementById('addProductForm');
+const deleteProductForm = document.getElementById('deleteProductForm');
 const prodsElement = document.getElementById('products');
 
-form.addEventListener('submit', (e) => {
+addProductForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const datForm = new FormData(e.target);
     const prod = Object.fromEntries(datForm);
     socket.emit('nuevoProducto', prod);
+    e.target.reset();
+})
+
+deleteProductForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const datForm = new FormData(e.target);
+    const idProd = Object.fromEntries(datForm);
+    socket.emit('eliminarProducto', idProd.id);
     e.target.reset();
 })
 

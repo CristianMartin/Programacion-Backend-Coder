@@ -44,6 +44,11 @@ io.on('connection', (socket) => {
         await productManager.addProduct(nuevoProd);
         socket.emit('prods', await productManager.getProducts());
     })
+
+    socket.on('eliminarProducto', async (idProdToDelete) => {
+        await productManager.delete(parseInt(idProdToDelete));
+        socket.emit('prods', await productManager.getProducts());
+    })
 })
 
 //Routes
