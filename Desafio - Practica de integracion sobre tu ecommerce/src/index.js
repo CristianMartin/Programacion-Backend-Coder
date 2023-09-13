@@ -1,15 +1,23 @@
 import express from 'express';
 import multer from 'multer';
+import mongoose from 'mongoose';
+import userRouter from './routes/users.routes.js';
 import prodsRouter from './routes/products.routes.js';
 import cartRouter from './routes/cart.routes.js';
 import path from 'path';
 import { __dirname } from './path.js';
 import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
-import ProductManager from './models/ProductManager.js';
+import { productModel } from "./models/products.models.js";
 
 const PORT = 8081;
 const app = express();
+
+mongoose.connect('mongodb+srv://cristian:atlas2023@cluster0.t2t0gid.mongodb.net/?retryWrites=true&w=majority')
+    .then(async () => {
+        console.log('BDD conectada')
+    })
+    .catch(() => console.log('Error en conexion a BDD'))
 
 //Config
 const storage = multer.diskStorage({
@@ -36,24 +44,37 @@ app.set('views', path.resolve(__dirname, './views'));//Rutas de mis vistas
 
 //Server de Socket.io
 const io = new Server(serverExpress);
-const productManager = new ProductManager('./productos.json');
 io.on('connection', (socket) => {
     console.log('Servidor Socket.io conectado');
 
     socket.on('nuevoProducto', async (nuevoProd) => {
-        await productManager.addProduct(nuevoProd);
-        socket.emit('prods', await productManager.getProducts());
+        await productModel.create(...nuevoProd);
+        socket.emit('prods', await productModel.find());
     })
 
     socket.on('eliminarProducto', async (idProdToDelete) => {
-        await productManager.delete(parseInt(idProdToDelete));
-        socket.emit('prods', await productManager.getProducts());
+        await productModel.findByIdAndDelete(idProdToDelete);
+        socket.emit('prods', await productModel.find());
+    })
+
+    socket.on('mensaje', (infoMensaje) => {
+        mensajes.push(infoMensaje)
+        socket.emit('mensajes', mensajes)
     })
 })
 
 //Routes
+app.use('/api/users', userRouter);
 app.use('/api/products', prodsRouter);
 app.use('/api/cart', cartRouter);
+
+app.get('/static', (req, res) => {
+    res.render('chat', {
+        css: "style.css",
+        title: "Chat",
+        js: "script.js"
+    })
+})
 
 app.get('/', (req, res) => {
     res.send("¡Bienvenido al Desafio - Websockets + Handlebars!");
