@@ -59,4 +59,32 @@ cartRouter.post('/:cid/products/:pid', async (req, res) => {
     }
 })
 
+cartRouter.delete('/:cid/products/:pid', async(req, res)=>{
+    const { cid, pid } = req.params
+
+    try{
+        const cart = await cartModel.findById(cid)
+
+        if (cart) {
+            const prod = await productModel.findById(pid)
+
+            if (prod) {
+                let products = cart.products.filter(prod => prod.product != pid)
+        
+                let respuesta = await cartModel.updateOne({_id: cid}, {$set: {products: products}}) 
+                
+                res.status(200).send({ respuesta: 'OK', mensaje: respuesta })
+            } else {
+                res.status(404).send({ respuesta: 'Error en eliminar el producto del Carrito', mensaje: 'Produt Not Found' })
+            }
+        } else {
+            res.status(404).send({ respuesta: 'Error en eliminar el producto del Carrito', mensaje: 'Cart Not Found' })
+        }
+    } catch (error) {
+        console.error(error)
+        res.status(400).send({ respuesta: 'Error al eliminar el producto del Carrito', mensaje: error })
+    }
+
+})
+
 export default cartRouter

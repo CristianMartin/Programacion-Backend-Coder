@@ -13,7 +13,7 @@ import { productModel } from "./models/products.models.js";
 const PORT = 8081;
 const app = express();
 
-mongoose.connect('mongodb+srv://cristian:atlas2023@cluster0.t2t0gid.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://cristian:atlas2000@cluster0.t2t0gid.mongodb.net/?retryWrites=true&w=majority')
     .then(async () => {
         console.log('BDD conectada')
     })
@@ -66,7 +66,7 @@ io.on('connection', (socket) => {
 //Routes
 app.use('/api/users', userRouter);
 app.use('/api/products', prodsRouter);
-app.use('/api/cart', cartRouter);
+app.use('/api/carts', cartRouter);
 
 app.get('/static', (req, res) => {
     res.render('chat', {
@@ -77,7 +77,7 @@ app.get('/static', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    res.send("¡Bienvenido al Desafio - Websockets + Handlebars!");
+    res.send("¡Bienvenido al Desafio - Segunda pre-entrega!");
 })
 
 app.post('/upload', upload.single('product'),(req, res) => {

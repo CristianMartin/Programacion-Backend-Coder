@@ -33,10 +33,11 @@ prodsRouter.get('/realTimeProducts', async (req, res) => {
 })
 
 prodsRouter.get('/', async (req, res) => {
-    const { limit } = req.query
+    const { query, limit, page, sort } = req.query
 
     try {
-        const prods = await productModel.find().limit(limit)
+        const prods = await productModel.paginate(query ?? {}, { limit: limit ?? 10, page: page ?? 1, sort: { precio: sort ?? '' } })
+        
         res.status(200).send({ respuesta: 'OK', mensaje: prods })
     } catch (error) {
         res.status(400).send({ respuesta: 'Error en consultar productos', mensaje: error })
