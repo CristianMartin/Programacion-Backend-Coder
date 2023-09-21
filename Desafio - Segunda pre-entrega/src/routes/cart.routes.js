@@ -54,9 +54,74 @@ cartRouter.post('/:cid/products/:pid', async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error)
         res.status(400).send({ respuesta: 'Error en agregar producto Carrito', mensaje: error })
     }
+})
+
+cartRouter.put('/:cid', async(req, res)=>{
+    const { cid } = req.params
+    const productsToReplace = req.body
+
+    try {
+        const cart = await cartModel.findByIdAndUpdate(cid, {$set: {products: productsToReplace}}) 
+
+        if (cart)
+            res.status(200).send({ respuesta: 'OK', mensaje: 'Carrito actualizado' })
+        else
+            res.status(404).send({ respuesta: 'Error al actualizar Carrito', mensaje: 'Not Found' })
+    } catch (error) {
+        res.status(400).send({ respuesta: 'Error al actualizar carrito', mensaje: error })
+    }
+})
+
+cartRouter.put('/:cid/products/:pid', async(req, res)=>{
+    const { cid, pid } = req.params
+    const { quantity } = req.body
+
+    try {
+        const cart = await cartModel.findById(cid)
+
+        if (cart) {
+            const prod = await productModel.findById(pid)
+
+            if (prod) {
+                const indice = cart.products.findIndex(item => item.id_prod == pid)
+
+                if (indice != -1) {
+                    cart.products[indice].quantity = quantity
+                } else {
+                    res.status(404).send({ respuesta: 'Error en actualizar el producto en el carrito', mensaje: 'Product Not Found in Cart' })
+                }
+
+                const respuesta = await cartModel.findByIdAndUpdate(cid, cart)
+
+                res.status(200).send({ respuesta: 'OK', mensaje: respuesta })
+            } else {
+                res.status(404).send({ respuesta: 'Error en actualizar el producto en el carrito', mensaje: 'Product Not Found' })
+            }
+        } else {
+            res.status(404).send({ respuesta: 'Error en actualizar el producto en el carrito', mensaje: 'Cart Not Found' })
+        }
+    } catch (error) {
+        res.status(400).send({ respuesta: 'Error en actualizar el producto en el carrito', mensaje: error })
+    }
+
+})
+
+cartRouter.delete('/:cid', async(req, res)=>{
+    const { cid } = req.params
+
+    try{
+        const cart = await cartModel.findByIdAndUpdate(cid, {$set: {products: []}})
+
+        if (cart)
+            res.status(200).send({ respuesta: 'OK', mensaje: 'productos del carrito eliminado' })
+        else
+            res.status(404).send({ respuesta: 'Error al eliminar los productos del carrito', mensaje: 'Not Found' })
+    } catch (error) {
+        res.status(400).send({ respuesta: 'Error al eliminar los productos del carrito', mensaje: error })
+    }
+
 })
 
 cartRouter.delete('/:cid/products/:pid', async(req, res)=>{
@@ -71,17 +136,16 @@ cartRouter.delete('/:cid/products/:pid', async(req, res)=>{
             if (prod) {
                 let products = cart.products.filter(prod => prod.product != pid)
         
-                let respuesta = await cartModel.updateOne({_id: cid}, {$set: {products: products}}) 
+                let respuesta = await cartModel.updateOne(cid, {$set: {products: products}}) 
                 
                 res.status(200).send({ respuesta: 'OK', mensaje: respuesta })
             } else {
-                res.status(404).send({ respuesta: 'Error en eliminar el producto del Carrito', mensaje: 'Produt Not Found' })
+                res.status(404).send({ respuesta: 'Error en eliminar el producto del Carrito', mensaje: 'Product Not Found' })
             }
         } else {
             res.status(404).send({ respuesta: 'Error en eliminar el producto del Carrito', mensaje: 'Cart Not Found' })
         }
     } catch (error) {
-        console.error(error)
         res.status(400).send({ respuesta: 'Error al eliminar el producto del Carrito', mensaje: error })
     }
 
