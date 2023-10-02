@@ -80,12 +80,12 @@ cartRouter.put('/:cid/products/:pid', async(req, res)=>{
 
     try {
         const cart = await cartModel.findById(cid)
-
+        
         if (cart) {
             const prod = await productModel.findById(pid)
-
+            
             if (prod) {
-                const indice = cart.products.findIndex(item => item.id_prod == pid)
+                const indice = cart.products.findIndex(item => item.id_prod._id.toString() == pid)
 
                 if (indice != -1) {
                     cart.products[indice].quantity = quantity
@@ -134,9 +134,9 @@ cartRouter.delete('/:cid/products/:pid', async(req, res)=>{
             const prod = await productModel.findById(pid)
 
             if (prod) {
-                let products = cart.products.filter(prod => prod.product != pid)
+                let products = cart.products.filter(prod => prod.id_prod._id.toString() != pid)
         
-                let respuesta = await cartModel.updateOne(cid, {$set: {products: products}}) 
+                let respuesta = await cartModel.updateOne({ _id: cid }, {$set: {products: products}}) 
                 
                 res.status(200).send({ respuesta: 'OK', mensaje: respuesta })
             } else {

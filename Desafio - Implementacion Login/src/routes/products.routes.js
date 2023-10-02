@@ -36,7 +36,7 @@ prodsRouter.get('/', async (req, res) => {
     const { query, limit, page, sort } = req.query
 
     try {
-        const prods = await productModel.paginate(query ?? {}, { limit: limit ?? 10, page: page ?? 1, sort: { precio: sort ?? '' } })
+        const prods = await productModel.paginate(query ?? {}, { limit: limit ?? 10, page: page ?? 1, sort: { price: sort ?? '' } })
         
         res.status(200).send({ respuesta: 'OK', mensaje: prods })
     } catch (error) {

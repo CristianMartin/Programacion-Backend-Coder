@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import userRouter from './routes/users.routes.js';
 import prodsRouter from './routes/products.routes.js';
 import cartRouter from './routes/cart.routes.js';
+import 'dotenv/config';
 import path from 'path';
 import { __dirname } from './path.js';
 import { engine } from 'express-handlebars';
@@ -13,7 +14,7 @@ import { productModel } from "./models/products.models.js";
 const PORT = 8081;
 const app = express();
 
-mongoose.connect('mongodb+srv://cristian:password@cluster0.t2t0gid.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGO_URL)
     .then(async () => {
         console.log('BDD conectada')
     })
