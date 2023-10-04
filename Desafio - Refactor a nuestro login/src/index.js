@@ -4,6 +4,9 @@ import mongoose from 'mongoose';
 import userRouter from './routes/users.routes.js';
 import prodsRouter from './routes/products.routes.js';
 import cartRouter from './routes/cart.routes.js';
+import 'dotenv/config';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import path from 'path';
 import { __dirname } from './path.js';
 import { engine } from 'express-handlebars';
@@ -13,7 +16,7 @@ import { productModel } from "./models/products.models.js";
 const PORT = 8081;
 const app = express();
 
-mongoose.connect('mongodb+srv://cristian:password@cluster0.t2t0gid.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGO_URL)
     .then(async () => {
         console.log('BDD conectada')
     })
@@ -35,6 +38,16 @@ const serverExpress = app.listen(PORT, () => {
 
 //Middleware
 app.use(express.json());
+app.use(cookieParser(process.env.SIGNED_COOKIE));
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { 
+        secure: false, 
+        maxAge: 40000
+    }
+}));
 app.use(express.urlencoded({ extended: true }));
 const upload = multer({ storage: storage });
 app.use('/static', express.static(path.join(__dirname, '/public')));
@@ -83,3 +96,11 @@ app.get('/', (req, res) => {
 app.post('/upload', upload.single('product'),(req, res) => {
     res.status(200).send("¡Imagen cargada!");
 });
+
+app.get('/setCookie', (req, res) => {
+    res.cookie('Cookie', 'Cookie de prueba', { maxAge: 5000, signed: true }).send('Cookie generada')
+})
+
+app.get('/getCookie', (req, res) => {
+    res.send(req.signedCookies)
+})
