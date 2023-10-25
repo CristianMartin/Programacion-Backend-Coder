@@ -60,6 +60,7 @@ app.set('view engine', 'handlebars');//Setting de handlebars
 app.set('views', path.resolve(__dirname, './views'));//Rutas de mis vistas
 
 //Server de Socket.io
+let mensajes = [];
 const io = new Server(serverExpress);
 io.on('connection', (socket) => {
     console.log('Servidor Socket.io conectado');

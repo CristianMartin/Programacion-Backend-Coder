@@ -15,7 +15,6 @@ Swal.fire({
     allowOutsideClick: false
 }).then(resultado => {
     user = resultado.value
-    console.log(user)
 })
 
 botonChat.addEventListener('click', () => {
@@ -31,6 +30,6 @@ botonChat.addEventListener('click', () => {
 socket.on('mensajes', (arrayMensajes) => {
     parrafosMensajes.innerHTML = ""
     arrayMensajes.forEach(mensaje => {
-        parrafosMensajes.innerHTML += `<p>${mensaje.fecha}: el usuario ${mensaje.user} escribio ${mensaje.mensaje} </p>`
+        parrafosMensajes.innerHTML += `<p>${mensaje.fecha}: El usuario "${mensaje.user}", escribio: ${mensaje.mensaje} </p>`
     })
 })
