@@ -13,6 +13,8 @@ import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
 import { productModel } from "./models/products.models.js";
 import { addLogger } from './utils/logger.js';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express';
 
 const PORT = 8081;
 const app = express();
@@ -21,7 +23,20 @@ mongoose.connect(process.env.MONGO_URL)
     .then(async () => {
         console.log('BDD conectada')
     })
-    .catch(() => console.log('Error en conexion a BDD'))
+    .catch(() => console.log('Error en conexion a BDD'));
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.1.0',
+        info: {
+            title: "Documentacion del curso de Backend",
+            description: "API Coder Backend"
+        }
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`] //** indica una subcarpeta que no me interesa el nombre, *.yaml no me interesa el nombre solo la extension
+}
+
+const specs = swaggerJSDoc(swaggerOptions)
 
 //Config
 const storage = multer.diskStorage({
@@ -82,6 +97,7 @@ io.on('connection', (socket) => {
 app.use('/api/users', userRouter);
 app.use('/api/products', prodsRouter);
 app.use('/api/carts', cartRouter);
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 app.get('/static', (req, res) => {
     res.render('chat', {

@@ -1,7 +1,7 @@
 {
-    "name": "desafio-implementacion-de-logger",
+    "name": "desafio-documentar-api",
     "version": "1.0.0",
-    "description": "desafio-implementacion-de-logger",
+    "description": "desafio-documentar-api",
     "type": "module",
     "main": "index.js",
     "scripts": {
@@ -31,6 +31,8 @@
         "passport-local": "^1.0.0",
         "jsonwebtoken": "^9.0.0",
         "bcrypt": "^5.1.0",
-        "connect-mongo": "^5.0.0"
+        "connect-mongo": "^5.0.0",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.0"
     }
 }
