@@ -12,6 +12,7 @@ import { __dirname } from './path.js';
 import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
 import { productModel } from "./models/products.models.js";
+import { addLogger } from './utils/logger.js';
 
 const PORT = 8081;
 const app = express();
@@ -39,6 +40,7 @@ const serverExpress = app.listen(PORT, () => {
 //Middleware
 app.use(express.json());
 app.use(cookieParser(process.env.SIGNED_COOKIE));
+app.use(addLogger);
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -103,4 +105,15 @@ app.get('/setCookie', (req, res) => {
 
 app.get('/getCookie', (req, res) => {
     res.send(req.signedCookies)
+})
+
+app.get('/loggerTest', (req, res) => {
+    req.logger.fatal("Logger Fatal");
+    req.logger.error("Logger Error");
+    req.logger.warning("Logger Warning");
+    req.logger.info("Logger Info");
+    req.logger.http("Logger HTTP");
+    req.logger.debug("Logger Debug");
+
+    res.send({status: "Ok", message: "LoggerTest completo!"});
 })
