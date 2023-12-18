@@ -1,7 +1,7 @@
 {
-    "name": "desafio-implementacio-de-logger",
+    "name": "desafio-implementacion-de-logger",
     "version": "1.0.0",
-    "description": "desafio-implementacio-de-logger",
+    "description": "desafio-implementacion-de-logger",
     "type": "module",
     "main": "index.js",
     "scripts": {
