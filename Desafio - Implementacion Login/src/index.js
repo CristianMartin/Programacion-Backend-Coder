@@ -39,7 +39,7 @@ const serverExpress = app.listen(PORT, () => {
 //Middleware
 app.use(express.json());
 app.use(cookieParser(process.env.SIGNED_COOKIE));
-/* app.use(session({
+app.use(session({
     store: MongoStore.create({
         mongoUrl: process.env.MONGO_URL,
         mongoOptions: {
@@ -49,9 +49,9 @@ app.use(cookieParser(process.env.SIGNED_COOKIE));
         ttl: 60
     }),
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
-})); */
+    resave: true,
+    saveUninitialized: true
+}));
 app.use(express.urlencoded({ extended: true }));
 const upload = multer({ storage: storage });
 app.use('/static', express.static(path.join(__dirname, '/public')));
