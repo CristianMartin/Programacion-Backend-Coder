@@ -8,8 +8,6 @@ const requester = supertest('http://localhost:8080')
 
 await mongoose.connect('')
 
-
-
 describe('Test Users Session api/session', function () {
     let cookie = {}
 
