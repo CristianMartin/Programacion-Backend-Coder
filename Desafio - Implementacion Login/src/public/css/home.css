@@ -1,3 +1,7 @@
 .card-w {
-    width: 18rem;
+    width: 20rem;
+}
+
+li {
+    list-style-type: none;
 }

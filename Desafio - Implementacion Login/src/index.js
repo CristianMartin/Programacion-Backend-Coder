@@ -4,14 +4,18 @@ import mongoose from 'mongoose';
 import userRouter from './routes/users.routes.js';
 import prodsRouter from './routes/products.routes.js';
 import cartRouter from './routes/cart.routes.js';
+import sessionRouter from './routes/session.routes.js';
 import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
 import path from 'path';
 import { __dirname } from './path.js';
 import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
 import { productModel } from "./models/products.models.js";
+
+
 
 const PORT = 8081;
 const app = express();
@@ -49,12 +53,13 @@ app.use(session({
         ttl: 60
     }),
     secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
 }));
 app.use(express.urlencoded({ extended: true }));
 const upload = multer({ storage: storage });
-app.use('/static', express.static(path.join(__dirname, '/public')));
+app.use('/chat', express.static(path.join(__dirname, '/public')));
+app.use('/', express.static(path.join(__dirname, '/public')));
 app.engine('handlebars', engine());//Definicion de motor de plantillas a usar y su config
 app.set('view engine', 'handlebars');//Setting de handlebars
 app.set('views', path.resolve(__dirname, './views'));//Rutas de mis vistas
@@ -66,7 +71,7 @@ io.on('connection', (socket) => {
     console.log('Servidor Socket.io conectado');
 
     socket.on('nuevoProducto', async (nuevoProd) => {
-        await productModel.create(...nuevoProd);
+        await productModel.create({...nuevoProd});
         socket.emit('prods', await productModel.find());
     })
 
@@ -85,8 +90,9 @@ io.on('connection', (socket) => {
 app.use('/api/users', userRouter);
 app.use('/api/products', prodsRouter);
 app.use('/api/carts', cartRouter);
+app.use('/api/session', sessionRouter);
 
-app.get('/static', (req, res) => {
+app.get('/Chat', (req, res) => {
     res.render('chat', {
         css: "style.css",
         title: "Chat",
@@ -94,8 +100,14 @@ app.get('/static', (req, res) => {
     })
 })
 
-app.get('/', (req, res) => {
-    res.send("¡Bienvenido al Desafio - Segunda pre-entrega!");
+app.get('/', async (req, res) => {
+    res.render('home', {
+        css: "home.css",
+        title: "Home",
+        js: "home.js",
+        products: await productModel.find().lean(),
+        login: req.session.login
+    })
 })
 
 app.post('/upload', upload.single('product'),(req, res) => {

@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand p-2" href="#">Navbar</a>
+<nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light bg-light">
+  <a class="navbar-brand p-2" href="/">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,14 +7,29 @@
   <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Cart</a>
+        <a class="nav-link" href="/">Cart</a>
       </li>
     </ul>
   </div>
-  <div class="me-4">
-    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Login</a>
-  </div>
+  {{#if login}}
+    <div class="me-4">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="/perfil" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Nombre de usuario
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/perfil">Perfil</a></li>
+            <li><a id="logout" class="dropdown-item">Logout</a></li>
+          </ul>
+        </li>
+    </div>
+  {{else}}
+    <div class="me-4">
+      <a class="nav-link" href="/api/session/loginPage" aria-disabled="true">Login</a>
+    </div>
+  {{/if}}
+
 </nav>

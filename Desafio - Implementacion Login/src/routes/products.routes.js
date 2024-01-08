@@ -13,7 +13,8 @@ prodsRouter.get('/all', async (req, res) => {
         css: "home.css",
         title: "All Products",
         js: "home.js",
-        products: await productModel.find()
+        products: await productModel.find().lean(),
+        login: req.session.login
     })
 })
 
@@ -21,14 +22,8 @@ prodsRouter.get('/realTimeProducts', (req, res) => {
     res.render('realTimeProducts', {
         css: "style.css",
         title: "RealTimeProducts",
-        js: "realTimeProducts.js"
-    })
-})
-
-prodsRouter.get('/realTimeProducts', async (req, res) => {
-    res.render('home', {
-        title: "All Products",
-        products: await productModel.find()
+        js: "realTimeProducts.js",
+        login: req.session.login
     })
 })
 
