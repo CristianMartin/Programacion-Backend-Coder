@@ -1,35 +1,29 @@
-const socket = io()
+const login = document.getElementById('logout');
 
-const botonChat = document.getElementById('botonChat')
-const parrafosMensajes = document.getElementById('parrafosMensajes')
-const valInput = document.getElementById('chatBox')
-let user
+login.addEventListener('click', event => {
 
-Swal.fire({
-    title: "Identificacion de usuario",
-    text: "Por favor ingrese su nombre de usuario",
-    input: "text",
-    inputValidator: (valor) => {
-        return !valor && "Ingrese su nombre de usuario valido"
-    },
-    allowOutsideClick: false
-}).then(resultado => {
-    user = resultado.value
-})
+    event.preventDefault();
 
-botonChat.addEventListener('click', () => {
-    let fechaActual = new Date().toLocaleString()
+    fetch('/api/session/logout', {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json'
+        }
+    }).then(result => {
+        console.log(result.status);
+        if (result.resultado == 200) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Deslogin exitoso'
+            })
+            setTimeout(function() {location.replace('/');}, 900);
 
-    if (valInput.value.trim().length > 0) {
-        socket.emit('mensaje', { fecha: fechaActual, user: user, mensaje: valInput.value })
-        valInput.value = ""
-        socket.on()
-    }
-})
-
-socket.on('mensajes', (arrayMensajes) => {
-    parrafosMensajes.innerHTML = ""
-    arrayMensajes.forEach(mensaje => {
-        parrafosMensajes.innerHTML += `<p>${mensaje.fecha}: El usuario "${mensaje.user}", escribio: ${mensaje.mensaje} </p>`
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al desloguearse',
+                text: result.error
+            })
+        }
     })
 })

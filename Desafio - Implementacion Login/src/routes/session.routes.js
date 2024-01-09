@@ -1,28 +1,7 @@
-import express, { Router } from "express";
-import path from 'path';
-import { __dirname } from '../path.js';
+import { Router } from "express";
 import { userModel } from "../models/user.models.js";
 
 const sessionRouter = Router();
-
-sessionRouter.use('/loginPage', express.static(path.join(__dirname, '/public')));
-
-sessionRouter.get('/loginPage', async (req, res) => {
-    res.render('login', {
-        title: "Login",
-        css: "style.css",
-        js: "login.js"
-    })
-})
-
-sessionRouter.get('/registerPage', async (req, res) => {
-    console.log(req.session.req)
-    res.render('login', {
-        title: "Login",
-        css: "style.css",
-        js: "login.js"
-    })
-})
 
 sessionRouter.post('/login', async(req, res) => {
     const { email, password } = req.body;
