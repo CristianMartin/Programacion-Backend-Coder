@@ -13,7 +13,8 @@ viewsRouter.get('/', async (req, res) => {
         title: "Home",
         js: "home.js",
         products: await productModel.find().lean(),
-        login: req.session.login
+        login: req.session.login,
+        user: req.session.user
     })
 })
 
@@ -23,7 +24,8 @@ viewsRouter.get('/all', async (req, res) => {
         title: "All Products",
         js: "home.js",
         products: await productModel.find().lean(),
-        login: req.session.login
+        login: req.session.login,
+        user: req.session.user
     })
 })
 
@@ -32,7 +34,8 @@ viewsRouter.get('/realTimeProducts', (req, res) => {
         css: "style.css",
         title: "RealTimeProducts",
         js: "realTimeProducts.js",
-        login: req.session.login
+        login: req.session.login,
+        user: req.session.user
     })
 })
 
@@ -41,7 +44,8 @@ viewsRouter.get('/Chat', (req, res) => {
         css: "style.css",
         title: "Chat",
         js: "chat.js",
-        login: req.session.login
+        login: req.session.login,
+        user: req.session.user
     })
 })
 

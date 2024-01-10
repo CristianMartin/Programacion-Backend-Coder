@@ -3,7 +3,7 @@ const socket = io();
 const botonChat = document.getElementById('botonChat');
 const parrafosMensajes = document.getElementById('parrafosMensajes');
 const valInput = document.getElementById('chatBox');
-let user = "Cris";
+let user;
 
 Swal.fire({
     title: "Identificacion de usuario",

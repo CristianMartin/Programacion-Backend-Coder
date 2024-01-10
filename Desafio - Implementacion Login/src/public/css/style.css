@@ -50,3 +50,20 @@ button {
 .chat-body {
     height: 20rem;
 }
+
+.nav-login  {
+    display: flex;
+    justify-content: center;
+}
+
+#logout {
+    cursor: pointer;
+}
+
+@media (max-width: 990px) {
+    .nav-login {
+        flex-direction: column;
+    }
+}
+  
+  

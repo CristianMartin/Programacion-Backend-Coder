@@ -1,3 +1,8 @@
+{{#if login}}
+  <div class="bg-info bg-opacity-10 border border-info border-start-0 rounded-end mt-2 p-3 ">
+    <h5>¡Bienvenido a CoderHome {{user.first_name}} {{user.last_name}}!</h5>
+  </div>
+{{/if}}
 <h1 class="text-center text-uppercase text-muted m-4">{{title}}</h1>
 <div class="d-flex flex-row justify-content-center">
   {{#each products}}
