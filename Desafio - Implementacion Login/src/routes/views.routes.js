@@ -39,7 +39,7 @@ viewsRouter.get('/realTimeProducts', (req, res) => {
     })
 })
 
-viewsRouter.get('/Chat', (req, res) => {
+viewsRouter.get('/chat', (req, res) => {
     res.render('chat', {
         css: "style.css",
         title: "Chat",
@@ -58,11 +58,10 @@ viewsRouter.get('/login', async (req, res) => {
 })
 
 viewsRouter.get('/register', async (req, res) => {
-    console.log(req.session.req)
-    res.render('login', {
-        title: "Login",
+    res.render('register', {
+        title: "Register",
         css: "style.css",
-        js: "login.js"
+        js: "register.js"
     })
 })
 
