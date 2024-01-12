@@ -1,20 +1,45 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand p-2" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Cart</a>
-      </li>
-    </ul>
-  </div>
-  <div class="me-4">
-    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Login</a>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand p-2" href="/">CoderHome</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarToggler">
+      <ul class="navbar-nav me-auto mb-2 ms-3 mb-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/all">All products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/realTimeProducts">Manage products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/chat">Chat support</a>
+        </li>
+      </ul>
+      <div class="nav-login ms-3">
+        <a class="nav-link me-4 pb-1" href="/cart" role="button">
+          <i class="bi bi-cart-fill"></i>
+        </a>
+        <div class="me-4">
+          {{#if login}}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="/perfil" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{user.first_name}} {{user.last_name}}
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                <li><a id="logout" class="dropdown-item" onclick="closeSession()">Logout</a></li>
+              </ul>
+            </li>
+          {{else}}
+            <a class="nav-link" href="/login" aria-disabled="true">Login</a>
+          {{/if}}
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
+<script src="js/logout.js"></script>

@@ -4,9 +4,12 @@ import mongoose from 'mongoose';
 import userRouter from './routes/users.routes.js';
 import prodsRouter from './routes/products.routes.js';
 import cartRouter from './routes/cart.routes.js';
+import sessionRouter from './routes/session.routes.js';
+import viewRoutes from './routes/views.routes.js';
 import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
 import path from 'path';
 import { __dirname } from './path.js';
 import { engine } from 'express-handlebars';
@@ -40,28 +43,32 @@ const serverExpress = app.listen(PORT, () => {
 app.use(express.json());
 app.use(cookieParser(process.env.SIGNED_COOKIE));
 app.use(session({
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URL,
+        mongoOptions: {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        },
+        ttl: 60
+    }),
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
-    cookie: { 
-        secure: false, 
-        maxAge: 40000
-    }
+    saveUninitialized: false
 }));
 app.use(express.urlencoded({ extended: true }));
 const upload = multer({ storage: storage });
-app.use('/static', express.static(path.join(__dirname, '/public')));
 app.engine('handlebars', engine());//Definicion de motor de plantillas a usar y su config
 app.set('view engine', 'handlebars');//Setting de handlebars
 app.set('views', path.resolve(__dirname, './views'));//Rutas de mis vistas
 
 //Server de Socket.io
+let mensajes = [];
 const io = new Server(serverExpress);
 io.on('connection', (socket) => {
     console.log('Servidor Socket.io conectado');
 
     socket.on('nuevoProducto', async (nuevoProd) => {
-        await productModel.create(...nuevoProd);
+        await productModel.create({...nuevoProd});
         socket.emit('prods', await productModel.find());
     })
 
@@ -77,21 +84,11 @@ io.on('connection', (socket) => {
 })
 
 //Routes
+app.use('/', viewRoutes);
 app.use('/api/users', userRouter);
 app.use('/api/products', prodsRouter);
 app.use('/api/carts', cartRouter);
-
-app.get('/static', (req, res) => {
-    res.render('chat', {
-        css: "style.css",
-        title: "Chat",
-        js: "script.js"
-    })
-})
-
-app.get('/', (req, res) => {
-    res.send("¡Bienvenido al Desafio - Segunda pre-entrega!");
-})
+app.use('/api/session', sessionRouter);
 
 app.post('/upload', upload.single('product'),(req, res) => {
     res.status(200).send("¡Imagen cargada!");
