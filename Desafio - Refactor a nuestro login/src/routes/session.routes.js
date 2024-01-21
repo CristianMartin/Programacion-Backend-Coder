@@ -42,7 +42,7 @@ sessionRouter.get('/github', passport.authenticate('github', { scope:['user:emai
 sessionRouter.get('/githubCallback', passport.authenticate('github'), async (req, res) => {
     req.session.login = true;
     req.session.user = req.user;
-    res.status(200).send({ mensaje: 'Usuario logueado' })
+    res.redirect('back');
 })
 
 sessionRouter.get('/logout', (req, res) => {
