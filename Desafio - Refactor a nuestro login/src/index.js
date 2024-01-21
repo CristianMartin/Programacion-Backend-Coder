@@ -8,6 +8,8 @@ import sessionRouter from './routes/session.routes.js';
 import viewRoutes from './routes/views.routes.js';
 import 'dotenv/config';
 import cookieParser from 'cookie-parser';
+import passport from 'passport';
+import initializePassport from './config/passport.js';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import path from 'path';
@@ -60,6 +62,10 @@ const upload = multer({ storage: storage });
 app.engine('handlebars', engine());//Definicion de motor de plantillas a usar y su config
 app.set('view engine', 'handlebars');//Setting de handlebars
 app.set('views', path.resolve(__dirname, './views'));//Rutas de mis vistas
+//passport
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Server de Socket.io
 let mensajes = [];

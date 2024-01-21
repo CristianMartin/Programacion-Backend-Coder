@@ -7,7 +7,7 @@ register.addEventListener('submit', event => {
     const datForm = new FormData(event.target);
     const registerData = Object.fromEntries(datForm);
 
-    fetch('/api/users/', {
+    fetch('/api/session/register', {
         method: 'POST',
         body: JSON.stringify(registerData),
         headers: {
@@ -19,7 +19,7 @@ register.addEventListener('submit', event => {
                 icon: 'success',
                 title: 'Register exitoso'
             })
-            setTimeout(function() {location.replace('/');}, 600);
+            setTimeout(function() {location.replace('/login');}, 600);
         } else {
             Swal.fire({
                 icon: 'error',
