@@ -1,36 +1,8 @@
-import express, { Router } from "express";
+import { Router } from "express";
 import { productModel } from "../models/products.models.js";
-import path from 'path';
-import { __dirname } from '../path.js';
+import { passportError, authorization } from '../utils/messageError.js';
 
 const prodsRouter = Router();
-
-prodsRouter.use('/all', express.static(path.join(__dirname, '/public')));
-prodsRouter.use('/realTimeProducts', express.static(path.join(__dirname, '/public')));
-
-prodsRouter.get('/all', async (req, res) => {
-    res.render('home', {
-        css: "home.css",
-        title: "All Products",
-        js: "home.js",
-        products: await productModel.find()
-    })
-})
-
-prodsRouter.get('/realTimeProducts', (req, res) => {
-    res.render('realTimeProducts', {
-        css: "style.css",
-        title: "RealTimeProducts",
-        js: "realTimeProducts.js"
-    })
-})
-
-prodsRouter.get('/realTimeProducts', async (req, res) => {
-    res.render('home', {
-        title: "All Products",
-        products: await productModel.find()
-    })
-})
 
 prodsRouter.get('/', async (req, res) => {
     const { query, limit, page, sort } = req.query
@@ -58,7 +30,7 @@ prodsRouter.get('/:id', async (req, res) => {
     }
 })
 
-prodsRouter.post('/', async (req, res) => {
+prodsRouter.post('/', passportError('jwt'), authorization('admin'), async (req, res) => {
     const { title, description, stock, code, price, category } = req.body
     try {
         const prod = await productModel.create({ title, description, stock, code, price, category })
@@ -68,7 +40,7 @@ prodsRouter.post('/', async (req, res) => {
     }
 })
 
-prodsRouter.put('/:id', async (req, res) => {
+prodsRouter.put('/:id', passportError('jwt'), authorization('admin'), async (req, res) => {
     const { id } = req.params
     const { title, description, stock, status, code, price, category } = req.body
 
@@ -83,7 +55,7 @@ prodsRouter.put('/:id', async (req, res) => {
     }
 })
 
-prodsRouter.delete('/:id', async (req, res) => {
+prodsRouter.delete('/:id', passportError('jwt'), authorization('admin'), async (req, res) => {
     const { id } = req.params
 
     try {

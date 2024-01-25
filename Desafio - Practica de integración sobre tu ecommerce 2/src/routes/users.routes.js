@@ -26,21 +26,11 @@ userRouter.get('/:id', async (req, res) => {
     }
 })
 
-userRouter.post('/', async (req, res) => {
-    const { nombre, apellido, edad, email, password } = req.body
-    try {
-        const respuesta = await userModel.create({ nombre, apellido, edad, email, password })
-        res.status(200).send({ respuesta: 'OK', mensaje: respuesta })
-    } catch (error) {
-        res.status(400).send({ respuesta: 'Error en crear usuario', mensaje: error })
-    }
-})
-
 userRouter.put('/:id', async (req, res) => {
     const { id } = req.params
-    const { nombre, apellido, edad, email, password } = req.body
+    const { first_name, last_name, age, email, password } = req.body
     try {
-        const user = await userModel.findByIdAndUpdate(id, { nombre, apellido, edad, email, password })
+        const user = await userModel.findByIdAndUpdate(id, { first_name, last_name, age, email, password })
         if (user) {
             res.status(200).send({ respuesta: 'OK', mensaje: user })
         } else {
