@@ -1,0 +1,26 @@
+{{#if login}}
+  <div class="bg-info bg-opacity-10 border border-info border-start-0 rounded-end mt-2 p-3 ">
+    <h5>¡Bienvenido a CoderHome {{user.first_name}} {{user.last_name}}!</h5>
+  </div>
+{{/if}}
+<h1 class="text-center text-uppercase text-muted m-4">{{title}}</h1>
+<div class="d-flex flex-row justify-content-center">
+  {{#each products}}
+    <div class="card card-w ms-4">
+        <div class="h-50">
+          <img src={{this.thumbnails}} class="card-img-top p-4" alt={{this.title}}>
+        </div>
+        <div class="card-body p-4">
+          <h5 class="card-title">{{this.title}}</h5>
+          <p class="card-text">{{this.description}}</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: {{this._id}}</li>
+            <li class="list-group-item">CODE: {{this.code}}</li>
+            <li class="list-group-item">PRICE: {{this.price}}</li>
+            <li class="list-group-item">STOCK: {{this.stock}}</li>
+            <li class="list-group-item">CATEGORY: {{this.category}}</li>
+          </ul>
+        </div>
+    </div>
+  {{/each}}
+</div>
