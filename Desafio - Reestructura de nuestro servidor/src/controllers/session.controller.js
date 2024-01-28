@@ -7,6 +7,9 @@ export const login = async(req, res) => {
         }
 
         req.session.login = true;
+        if(req.user.rol == 'admin') {
+            req.session.admin = true;
+        }
         req.session.user = {
             first_name: req.user.first_name,
             last_name: req.user.last_name,
@@ -17,11 +20,12 @@ export const login = async(req, res) => {
         const token = generateToken(req.user);
 
         res.cookie('jwtCookie', token, {
-            maxAge: 43200000,
-            signed: true
+            maxAge: 1000*60*24,
+            signed: true,
+            httpOnly: true
         });
 
-        res.status(200).send({ payload: req.user });
+        res.status(200).send({mensaje: 'Usuario logueado', payload: req.user });
     } catch (error) {
         res.status(500).send({ mensaje: `Error al iniciar sesion ${error}`});
     }

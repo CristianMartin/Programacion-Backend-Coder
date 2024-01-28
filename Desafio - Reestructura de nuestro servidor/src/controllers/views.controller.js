@@ -7,7 +7,8 @@ export const homeView = async (req, res) => {
         js: "home.js",
         products: await productModel.find().lean(),
         login: req.session.login,
-        user: req.session.user
+        user: req.session.user,
+        admin: req.session.admin
     });
 }
 
@@ -18,7 +19,8 @@ export const productsView = async (req, res) => {
         js: "home.js",
         products: await productModel.find().lean(),
         login: req.session.login,
-        user: req.session.user
+        user: req.session.user,
+        admin: req.session.admin
     });
 }
 
@@ -28,7 +30,8 @@ export const realTimeProductsView = async (req, res) => {
         title: "RealTimeProducts",
         js: "realTimeProducts.js",
         login: req.session.login,
-        user: req.session.user
+        user: req.session.user,
+        admin: req.session.admin
     });
 }
 
@@ -38,7 +41,8 @@ export const chatView = async (req, res) => {
         title: "Chat",
         js: "chat.js",
         login: req.session.login,
-        user: req.session.user
+        user: req.session.user,
+        admin: req.session.admin
     });
 }
 
@@ -46,7 +50,8 @@ export const loginView = async (req, res) => {
     res.render('login', {
         title: "Login",
         css: "style.css",
-        js: "login.js"
+        js: "login.js",
+        admin: req.session.admin
     });
 }
 
@@ -54,6 +59,7 @@ export const registerView = async (req, res) => {
     res.render('register', {
         title: "Register",
         css: "style.css",
-        js: "register.js"
+        js: "register.js",
+        admin: req.session.admin
     });
 }

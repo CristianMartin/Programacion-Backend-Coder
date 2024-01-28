@@ -12,9 +12,11 @@
         <li class="nav-item">
           <a class="nav-link" href="/all">All products</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/realTimeProducts">Manage products</a>
-        </li>
+        {{#if admin}}
+          <li class="nav-item">
+            <a class="nav-link" href="/realTimeProducts">Product manager</a>
+          </li>
+        {{/if}}
         <li class="nav-item">
           <a class="nav-link" href="/chat">Chat support</a>
         </li>

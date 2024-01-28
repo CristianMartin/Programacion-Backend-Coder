@@ -16,14 +16,11 @@ login.addEventListener('submit', async event => {
     })
 
     if (response.status == 200) {
-        const datos = await response.json();
-        console.log(datos);
-        document.cookie = `jwtCookie=${datos.token}; expires=${new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toUTCString()};path=/;httpOnly=true;`
         Swal.fire({
             icon: 'success',
             title: 'Login exitoso'
         })
-        setTimeout(function() {location.replace('/');}, 600);
+        setTimeout(function() {location.replace('/all');}, 600);
 
     } else {
         Swal.fire({
