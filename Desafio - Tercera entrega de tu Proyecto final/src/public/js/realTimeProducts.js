@@ -28,6 +28,7 @@ socket.on('prods', (prods) => {
                 <h5 class="card-title">${prod.title}</h5>
                 <p class="card-text">${prod.description}</p>
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">ID: ${prod._id}</li>
                     <li class="list-group-item">CODE: ${prod.code}</li>
                     <li class="list-group-item">PRICE: ${prod.price}</li>
                     <li class="list-group-item">STOCK: ${prod.stock}</li>
