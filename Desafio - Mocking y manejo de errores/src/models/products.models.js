@@ -32,7 +32,10 @@ const productSchema = new Schema({
         required: true,
         unique: true
     },
-    thumbnails: []
+    thumbnails: {
+        type: Array,
+        default: ['img/No_Product_image.png']
+    }
 });
 
 productSchema.plugin(paginate);
