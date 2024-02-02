@@ -1,0 +1,6 @@
+export const Errors = {
+  INVALID_TYPES_ERROR: 2,
+  DATABASE_ERROR: 3,
+  MISSING_DATA: 4,
+  ROUTING_ERROR: 5
+}
