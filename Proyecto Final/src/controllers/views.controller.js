@@ -69,3 +69,16 @@ export const registerView = async (req, res) => {
         admin: req.session.admin
     });
 }
+
+export const profileView = async (req, res) => {
+    req.logger.http(`${req.method} es ${req.url} - ${new Date().toLocaleTimeString()}`);
+
+    res.render('profile', {
+        title: "Profile",
+        css: "style.css",
+        js: "home.js",
+        login: req.session.login,
+        user: req.session.user,
+        admin: req.session.admin
+    });
+}

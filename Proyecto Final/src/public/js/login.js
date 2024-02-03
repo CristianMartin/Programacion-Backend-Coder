@@ -23,7 +23,6 @@ login.addEventListener('submit', async event => {
         setTimeout(function() {location.replace('/all');}, 600);
 
     } else {
-        console.log(response);
         Swal.fire({
             icon: 'error',
             title: 'Error al realizar el login',
