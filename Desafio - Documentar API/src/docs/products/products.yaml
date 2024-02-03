@@ -82,10 +82,10 @@ components:
           type: Array
           description: Arreglo imagenes del producto
       example:
-        _id: ObjectId(13pqo402123)
-        title: Manzana
-        description: Manzana deliciosa de Rio Negro
-        price: 130
-        stock: 300
-        code: M4nz4n4
+        _id: ObjectId(A234451SADSA)
+        title: Placa de video rtx 3060
+        description: Placa de video rtx 3060 12gb
+        price: 300000
+        stock: 200
+        code: RTX3060N
         thumbnails: []

@@ -14,7 +14,8 @@ const customLevelOptions = {
         error: 'yellow',
         warning: 'magenta',
         info: 'blue',
-        debug: 'white'
+        debug: 'white',
+        http: 'green'
     }
 }
 
@@ -31,6 +32,13 @@ const logger = winston.createLogger({
         new winston.transports.File({
             filename: './errors.html',
             level: 'error',
+            format: winston.format.combine(
+                winston.format.simple()
+            )
+        }),
+        new winston.transports.File({
+            filename: './loggers.html',
+            level: 'http',
             format: winston.format.combine(
                 winston.format.simple()
             )

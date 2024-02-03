@@ -47,7 +47,7 @@ paths:
                 properties:
                   _id: ID del producto
                   quantity: Cantidad del producto
-            example: [{ _id: ObjectId(asdd21431), quantity: 100 }]
+            example: [{ _id: ObjectId(332WSSW2AA), quantity: 130 }]
       summary: Agrega productos al carrito con id = :cid
       tags:
         - Carts
@@ -69,7 +69,7 @@ paths:
           description: Productos del carrito eliminado
         "400":
           description: Error al eliminar los productos del carrito
-        "400":
+        "404":
           description: Error al eliminar los productos del carrito, el carrito no existe
         "500":
           description: Error del servidor
@@ -94,7 +94,7 @@ paths:
       responses:
         "200":
           description: Productos del carrito eliminado
-        "404":
+        "400":
           description: Error al eliminar los productos del carrito
         "404":
           description: El carrito o el producto no existen
@@ -121,9 +121,10 @@ components:
                 type: Number
                 description: Cantidad del producto
       example:
-        _id: ObjectId(442sft3567)
+        _id: ObjectId(234SSDSAQQ)
         products:
           [
-            { _id: ObjectId(eewq244512), quantity: 15 },
-            { _id: ObjectId(ssfg143534), quantity: 24 },
+            { _id: ObjectId(22DDFF2QQAS), quantity: 575 },
+            { _id: ObjectId(D4552AASS34), quantity: 7 },
+            { _id: ObjectId(D45RTETRS14), quantity: 12 },
           ]

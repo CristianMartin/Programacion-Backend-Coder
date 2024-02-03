@@ -1,9 +1,9 @@
-const socket = io()
+const socket = io();
 
-const botonChat = document.getElementById('botonChat')
-const parrafosMensajes = document.getElementById('parrafosMensajes')
-const valInput = document.getElementById('chatBox')
-let user
+const botonChat = document.getElementById('botonChat');
+const parrafosMensajes = document.getElementById('parrafosMensajes');
+const valInput = document.getElementById('chatBox');
+let user;
 
 Swal.fire({
     title: "Identificacion de usuario",
@@ -15,7 +15,6 @@ Swal.fire({
     allowOutsideClick: false
 }).then(resultado => {
     user = resultado.value
-    console.log(user)
 })
 
 botonChat.addEventListener('click', () => {
@@ -31,6 +30,6 @@ botonChat.addEventListener('click', () => {
 socket.on('mensajes', (arrayMensajes) => {
     parrafosMensajes.innerHTML = ""
     arrayMensajes.forEach(mensaje => {
-        parrafosMensajes.innerHTML += `<p>${mensaje.fecha}: el usuario ${mensaje.user} escribio ${mensaje.mensaje} </p>`
+        parrafosMensajes.innerHTML += `<p class="bg-success text-white rounded p-3 ms-3">${mensaje.fecha}: El usuario "${mensaje.user}", escribio: ${mensaje.mensaje} </p>`
     })
 })
