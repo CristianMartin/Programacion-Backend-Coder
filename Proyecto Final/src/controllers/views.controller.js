@@ -76,7 +76,20 @@ export const profileView = async (req, res) => {
     res.render('profile', {
         title: "Profile",
         css: "style.css",
-        js: "home.js",
+        js: "profile.js",
+        login: req.session.login,
+        user: req.session.user,
+        admin: req.session.admin
+    });
+}
+
+export const cartView = async (req, res) => {
+    req.logger.http(`${req.method} es ${req.url} - ${new Date().toLocaleTimeString()}`);
+
+    res.render('cart', {
+        title: "Cart",
+        css: "style.css",
+        js: "cart.js",
         login: req.session.login,
         user: req.session.user,
         admin: req.session.admin

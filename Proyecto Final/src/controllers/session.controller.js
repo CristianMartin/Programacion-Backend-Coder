@@ -12,15 +12,15 @@ export const login = async(req, res, next) => {
         }
 
         req.session.login = true;
-        if(req.user.rol == 'admin') {
-            req.session.admin = true;
-        }
+        req.session.admin = req.user.rol == 'admin';
+
         req.session.user = {
             first_name: req.user.first_name,
             last_name: req.user.last_name,
             age: req.user.age,
             email: req.user.email,
-            rol: req.user.rol
+            rol: req.user.rol,
+            cart: req.user.cart
         }
 
         const token = generateToken(req.user);
