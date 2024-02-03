@@ -16,9 +16,25 @@ import { productModel } from "./models/products.models.js";
 import compression from "express-compression";
 import errorHandler from "./middleware/errors/errorHandler.js";
 import { addLogger } from './utils/logger.js';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express';
 
 const PORT = 3000;
 const app = express();
+
+const swaggerOptions = {
+  definition: {
+      openapi: '3.1.0',
+      info: {
+          title: "Documentacion del curso de backend en nodejs",
+          description: "Api backend de un ecommerce",
+          version: "1.0.0"
+      }
+  },
+  apis: [`${__dirname}/docs/**/*.yaml`]
+}
+
+const specs = swaggerJSDoc(swaggerOptions);
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -95,6 +111,7 @@ io.on("connection", (socket) => {
 
 //Routes
 app.use("/", router);
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 app.use(errorHandler);
 
 app.post("/upload", upload.single("product"), (req, res) => {

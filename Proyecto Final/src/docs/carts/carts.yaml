@@ -1,0 +1,130 @@
+paths:
+  /api/carts:
+    get:
+      summary: Retorna todos los carritos
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Devuelve todos los carritos
+        "400":
+          description: Error en consultar Carritos
+        "500":
+          description: Error del servidor
+    post:
+      summary: Crea un carrito
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Carrito creado con exito
+        "400":
+          description: Error en crear Carrito
+        "500":
+          description: Error del servidor
+  /api/carts/:cid:
+    get:
+      summary: Retorna el carrito con id = :cid
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Devuelve el carrito exitosamente
+        "400":
+          description: Error en consulta carrito
+        "404":
+          description: Error en consulta carrito, el carrito no existe
+        "500":
+          description: Error del servidor
+    put:
+      parameters:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  _id: ID del producto
+                  quantity: Cantidad del producto
+            example: [{ _id: ObjectId(332WSSW2AA), quantity: 130 }]
+      summary: Agrega productos al carrito con id = :cid
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Carrito actualizado correctamente
+        "400":
+          description: Error al actualizar Carrito
+        "404":
+          description: Error al actualizar Carrito, el carrito no existe
+        "500":
+          description: Error del servidor
+    delete:
+      summary: Elimina el carrito con id = :cid
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Productos del carrito eliminado
+        "400":
+          description: Error al eliminar los productos del carrito
+        "404":
+          description: Error al eliminar los productos del carrito, el carrito no existe
+        "500":
+          description: Error del servidor
+  /api/carts/:cid/product/:pid:
+    put:
+      summary: Modifica la cantidad de un producto con id = :pid dentro de un carrito con id = :cid
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: La cantidad del producto se modificó exitosamente
+        "400":
+          description: Error en actualizar el producto en el carrito
+        "404":
+          description: El carrito no existe o el producto no existe dentro del carrito
+        "500":
+          description: Error del servidor
+    delete:
+      summary: Elimina un producto con id = :pid dentro de un carrito con id = :cid
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Productos del carrito eliminado
+        "400":
+          description: Error al eliminar los productos del carrito
+        "404":
+          description: El carrito o el producto no existen
+        "500":
+          description: Error del servidor
+components:
+  schemas:
+    Carts:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado
+        products:
+          type: array
+          description: Arreglo de los productos del carrito
+          items:
+            type: object
+            properties:
+              _id:
+                type: ObjectId
+                description: Id del producto
+              quantity:
+                type: Number
+                description: Cantidad del producto
+      example:
+        _id: ObjectId(234SSDSAQQ)
+        products:
+          [
+            { _id: ObjectId(22DDFF2QQAS), quantity: 575 },
+            { _id: ObjectId(D4552AASS34), quantity: 7 },
+            { _id: ObjectId(D45RTETRS14), quantity: 12 },
+          ]

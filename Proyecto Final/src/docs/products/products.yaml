@@ -1,0 +1,91 @@
+paths:
+  /api/products:
+    get:
+      summary: Obteniene todos los productos que cumplan con la query
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Devuelve los productos consultados
+        "400":
+          description: Error en consultar productos
+        "500":
+          description: Error del servidor
+    post:
+      summary: Crea un producto
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Producto creado con exito
+        "400":
+          description: Error al crear el producto
+        "500":
+          description: Error del servidor
+  /api/products/:pid:
+    put:
+      summary: Modifica el producto con id = :pid
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Producto actualizado
+        "400":
+          description: Error en actualizar producto
+        "404":
+          description: El producto no existe
+        "500":
+          description: Error del servidor
+    delete:
+      summary: Elimina el producto con id = :pid
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Producto eliminado correctamente
+        "400":
+          description: Error en eliminar producto
+        "404":
+          description: El producto a eliminar no existe
+        "500":
+          description: Error del servidor
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado
+        title:
+          type: String
+          description: Titulo del producto
+        description:
+          type: String
+          description: Descripcion del producto
+        price:
+          type: Number
+          description: Precio por unidad del producto
+        stock:
+          type: Number
+          description: Cantidad de productos disponibles
+        category:
+          type: String
+          description: Categoria del producto
+        status:
+          type: Boolean,
+          description: Identifica si está disponible
+        code:
+          type: String
+          description: Código del producto generado
+        thumbnails:
+          type: Array
+          description: Arreglo imagenes del producto
+      example:
+        _id: ObjectId(A234451SADSA)
+        title: Placa de video rtx 3060
+        description: Placa de video rtx 3060 12gb
+        price: 300000
+        stock: 200
+        code: RTX3060N
+        thumbnails: []
