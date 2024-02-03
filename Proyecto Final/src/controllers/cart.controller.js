@@ -36,11 +36,14 @@ export const postCart = async (req, res, next) => {
             req.logger.error(`Error al crear el carrito`);
         }
     } catch (error) {
-        if (error.code == 11000) { //llave duplicada code:11000
-            CustomError.generateError({ status: 400, name: 'Error carrito ya creado', cause: failCreateInDB(), code: Errors.DATABASE_ERROR});
-            req.logger.error(`Error al crear el carrito, carrito ya creado`);
+        try {
+            if (error.code == 11000) { //llave duplicada code:11000
+                CustomError.generateError({ status: 400, name: 'Error carrito ya creado', cause: failCreateInDB(), code: Errors.DATABASE_ERROR});
+                req.logger.error(`Error al crear el carrito, carrito ya creado`);
+            }
+        } catch (error) {
+            next(error);
         }
-
         next(error);
     }
 }

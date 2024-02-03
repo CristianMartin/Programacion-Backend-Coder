@@ -1,14 +1,16 @@
 import { productModel } from '../models/products.models.js';
 import CustomError from "../service/errors/CustomError.js";
-import { dataNotFound, idNotFound } from '../service/errors/generateInfoError.js';
+import { dataNotFound, idNotFound, failCreateInDB } from '../service/errors/generateInfoError.js';
 import { Errors } from "../service/errors/errors.js";
 
 export const getProducts = async (req, res, next) => {
     req.logger.http(`${req.method} es ${req.url} - ${new Date().toLocaleTimeString()}`);
     const { query, limit, page, sort } = req.query;
 
+    const sortInt = sort? parseInt(sort): 1;
+
     try {
-        const prods = await productModel.paginate(query ?? {}, { limit: limit ?? 10, page: page ?? 1, sort: { price: sort ?? '' } });
+        const prods = await productModel.paginate(query ?? {}, { limit: limit ?? 10, page: page ?? 1, sort: { price: sortInt } });
 
         if (prods) {
             res.status(200).send({ respuesta: 'OK', mensaje: prods });
@@ -55,11 +57,15 @@ export const postProduct = async (req, res, next) => {
             req.logger.error(`Error al crear el producto`);
         }
     } catch (error) {
-        if (error.code == 11000) { //llave duplicada code:11000
-            CustomError.generateError({ status: 400, name: 'Producto ya creado', cause: failCreateInDB(), code: Errors.DATABASE_ERROR});
-            req.logger.error(`Error al crear el producto, producto ya creado`);
+        try {
+            if (error.code == 11000) { //llave duplicada code:11000
+                CustomError.generateError({ status: 400, name: 'Producto ya creado', cause: failCreateInDB(), code: Errors.DATABASE_ERROR});
+                req.logger.error(`Error al crear el producto, producto ya creado`);
+            }
+        } catch (error) {
+            next(error);
         }
-        next(next);
+        next(error);
     }
 }
 

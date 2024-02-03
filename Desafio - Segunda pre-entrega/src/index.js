@@ -10,10 +10,10 @@ import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
 import { productModel } from "./models/products.models.js";
 
-const PORT = 8081;
+const PORT = 3000;
 const app = express();
 
-mongoose.connect('mongodb+srv://cristian:password@cluster0.t2t0gid.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://cristian:Atlas2023@cluster0.t2t0gid.mongodb.net/?retryWrites=true&w=majority')
     .then(async () => {
         console.log('BDD conectada')
     })
