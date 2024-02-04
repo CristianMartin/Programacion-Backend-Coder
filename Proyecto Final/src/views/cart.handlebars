@@ -4,47 +4,50 @@
     </h2>
     <div className="container mt-4 mb-5">
     <div id="bodyCarrito" className="row">
-        {{#if products}}
-            {{#each products}}
-                <div class="card card-w ms-4">
-                    <div class="h-50">
-                    <img src={{this.thumbnails}} class="card-img-top p-4" alt={{this.title}}>
+        <div class="d-flex flex-row justify-content-center">
+            {{#if cartProducts}}
+                {{#each cartProducts}}
+                    <div class="card card-w ms-4">
+                        <div class="h-50">
+                        <img src={{this.id_prod.thumbnails}} class="card-img-top p-4" alt={{this.id_prod.title}}>
+                        </div>
+                        <div class="card-body p-4">
+                        <h5 class="card-title">{{this.id_prod.title}}</h5>
+                        <p class="card-text">{{this.id_prod.description}}</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">PRICE: ${{this.id_prod.price}}</li>
+                            <li class="list-group-item">STOCK: {{this.id_prod.stock}}</li>
+                            <li class="list-group-item">CATEGORY: {{this.id_prod.category}}</li>
+                            <li class="list-group-item">QUANTITY: {{this.quantity}}</li>
+                        </ul>
+                        </div>
                     </div>
-                    <div class="card-body p-4">
-                    <h5 class="card-title">{{this.title}}</h5>
-                    <p class="card-text">{{this.description}}</p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">ID: {{this._id}}</li>
-                        <li class="list-group-item">CODE: {{this.code}}</li>
-                        <li class="list-group-item">PRICE: ${{this.price}}</li>
-                        <li class="list-group-item">STOCK: {{this.stock}}</li>
-                        <li class="list-group-item">CATEGORY: {{this.category}}</li>
-                    </ul>
-                    </div>
+                {{/each}}
+            {{else}}
+                <div>
+                    <h2 class="text-secondary text-opacity-75 text-center">
+                        ¡Carrito vacío!
+                    </h2>
                 </div>
-            {{/each}}
-        {{else}}
-            <div>
-                <h2 class="text-secondary text-opacity-75 text-center">
-                    ¡Tu carrito está vacío!
-                </h2>
-            </div>
-        {{/if}}
+            {{/if}}
+        </div>
     </div>
     </div>
-        {{#if products}}
+        {{#if cartProducts}}
             <div>
                 <h5 class="text-center m-4">
-                Costo total: <span>${totalCost}</span>
+                Costo total: <span>${{totalCost}}</span>
                 </h5>
                 <div class="d-flex justify-content-center pb-5">
-                <button class="btn btn-danger pr-4 ms-4" onClick={emptyCart}>
-                    Vaciar carrito
-                </button>
-                <button class="btn btn-dark pr-4 ms-4" onClick={realizarCompra}>
-                    Realizar compra
-                </button>
+                <form id="vaciarCarrito" method="post">
+                    <input id="cartId" name="cartId" type="hidden" value={{user.cart}} />
+                    <button type="submit" class="btn btn-danger pr-4 ms-4">Vaciar carrito</button>
+                    <button id="comprar" class="btn btn-dark pr-4 ms-4">Realizar compra</button>
+                </form>
                 </div>
             <div/>
+        {{else}}
+            <span id="vaciarCarrito" style="display:none"></span>
+            <span id="comprar" style="display:none"></span>
         {{/if}}
 <div/>

@@ -1,4 +1,5 @@
 import { productModel } from "../models/products.models.js";
+import { cartModel } from "../models/carts.models.js";
 
 export const homeView = async (req, res) => {
     req.logger.http(`${req.method} es ${req.url} - ${new Date().toLocaleTimeString()}`);
@@ -72,7 +73,6 @@ export const registerView = async (req, res) => {
 
 export const profileView = async (req, res) => {
     req.logger.http(`${req.method} es ${req.url} - ${new Date().toLocaleTimeString()}`);
-
     res.render('profile', {
         title: "Profile",
         css: "style.css",
@@ -86,12 +86,21 @@ export const profileView = async (req, res) => {
 export const cartView = async (req, res) => {
     req.logger.http(`${req.method} es ${req.url} - ${new Date().toLocaleTimeString()}`);
 
+    let cart;
+    let totalCost = 0;
+    if(req.session.user) {
+        cart = (await cartModel.findById(req.session.user.cart).lean()).products;
+        totalCost = cart.reduce((acc, product) => { return product.quantity * product.id_prod.price + acc }, 0);
+    }
+
     res.render('cart', {
         title: "Cart",
         css: "style.css",
         js: "cart.js",
         login: req.session.login,
         user: req.session.user,
-        admin: req.session.admin
+        admin: req.session.admin,
+        totalCost: totalCost,
+        cartProducts: cart
     });
 }

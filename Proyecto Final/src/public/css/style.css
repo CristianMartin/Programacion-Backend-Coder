@@ -39,8 +39,8 @@ input {
 }
 
 input {
-    width: 100%;
-    padding: 8px;
+    width: 75%;
+    padding: 4px;
     border: 1px solid #ccc;
 }
 
@@ -66,24 +66,6 @@ footer{
     height: 20rem;
 }
 
-.nav-login  {
-    display: flex;
-    justify-content: center;
-}
-
-#logout {
-    cursor: pointer;
-}
-
-.body-profile {
-    margin-top:20px;
-    color: #1a202c;
-    text-align: left;
-    background-color: #e2e8f0;    
-}
-.main-body {
-    padding: 15px;
-}
 .card {
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
 }
@@ -101,9 +83,27 @@ footer{
 }
 
 .card-body {
-    flex: 1 1 auto;
     min-height: 1px;
     padding: 1rem;
+}
+
+.nav-login  {
+    display: flex;
+    justify-content: center;
+}
+
+#logout {
+    cursor: pointer;
+}
+
+.body-profile {
+    margin-top:20px;
+    color: #1a202c;
+    text-align: left;
+    background-color: #e2e8f0;    
+}
+.main-body {
+    padding: 15px;
 }
 
 .gutters-sm {
