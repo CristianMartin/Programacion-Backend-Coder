@@ -2,8 +2,8 @@
     <h2 class="text-uppercase text-center text-muted m-4">
         Carro de compras
     </h2>
-    <div className="container mt-4 mb-5">
-    <div id="bodyCarrito" className="row">
+    <div class="container mt-4 mb-5">
+    <div id="bodyCarrito" class="row">
         <div class="d-flex flex-row justify-content-center">
             {{#if cartProducts}}
                 {{#each cartProducts}}
@@ -36,18 +36,21 @@
         {{#if cartProducts}}
             <div>
                 <h5 class="text-center m-4">
-                Costo total: <span>${{totalCost}}</span>
+                    Costo total: <span>${{totalCost}}</span>
                 </h5>
                 <div class="d-flex justify-content-center pb-5">
-                <form id="vaciarCarrito" method="post">
-                    <input id="cartId" name="cartId" type="hidden" value={{user.cart}} />
-                    <button type="submit" class="btn btn-danger pr-4 ms-4">Vaciar carrito</button>
-                    <button id="comprar" class="btn btn-dark pr-4 ms-4">Realizar compra</button>
-                </form>
+                    <form id="vaciarCarrito" method="post">
+                        <input id="cartId" name="cartId" type="hidden" value={{user.cart}} />
+                        <button class="btn btn-danger pr-4 ms-4" type="submit">Vaciar carrito</button>
+                    </form>
+                    <form id="comprarCarrito" method="post">
+                        <input id="cartId" name="cartId" type="hidden" value={{user.cart}} />
+                        <button class="btn btn-dark pr-4 ms-4" type="submit">Realizar compra</button>
+                    </form>
                 </div>
             <div/>
         {{else}}
             <span id="vaciarCarrito" style="display:none"></span>
-            <span id="comprar" style="display:none"></span>
+            <span id="comprarCarrito" style="display:none"></span>
         {{/if}}
 <div/>

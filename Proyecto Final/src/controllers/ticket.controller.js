@@ -47,7 +47,7 @@ export const getTicket = async(req, res, next) => {
 export const postTicket = async(req, res, next) => {
     req.logger.http(`${req.method} es ${req.url} - ${new Date().toLocaleTimeString()}`);
     const { cid } = req.params;
-
+    
     try {
         const cart = await cartModel.findById(cid);
         const cartProducts = cart.products;

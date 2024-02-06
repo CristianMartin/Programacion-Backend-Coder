@@ -26,7 +26,7 @@ export const login = async(req, res, next) => {
         const token = generateToken(req.user);
 
         res.cookie('jwtCookie', token, {
-            maxAge: 1000*60*24,
+            maxAge: 1*24*60*60*1000,
             signed: true,
             httpOnly: true
         });
