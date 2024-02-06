@@ -21,15 +21,16 @@
               <li class="list-group-item">CATEGORY: {{this.category}}</li>
             </ul>
           </div>
-          <form id="addProdToCart" method="post" class="d-flex flex-column justify-content-center p-0">
+          <form onsubmit="addProdToCart(event)" method="post" class="d-flex flex-column justify-content-center p-0">
             <div class="d-flex flex-row justify-content-center">
               <span class="ms-3 me-2">QUANTITY:</span>
               <input id="prodId" name="prodId" type="hidden" value={{this._id}} />
               <input id="cartId" name="cartId" type="hidden" value={{../user.cart}} />
+              <input id="login" name="login" type="hidden" value={{../login}} />
               <input class="w-25" id="quantity" name="quantity" type="number" min="1"  step="1" value="1" max={{this.stock}}>
             </div>
             <div class="d-flex flex-row justify-content-center p-2 mb-4">
-              <button type="submit" class="btn btn-primary text-light ms-4">Agregar al carrito</button>
+              <button class="btn btn-primary text-light ms-4" type="submit">Agregar al carrito</button>
             </div>
           </form>
         </div>
