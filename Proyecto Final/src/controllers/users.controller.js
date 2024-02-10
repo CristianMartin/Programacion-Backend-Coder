@@ -1,4 +1,5 @@
 import { userModel } from "../models/user.models.js";
+import UserDto from "../dto/user.dto.js";
 import CustomError from "../service/errors/CustomError.js";
 import { dataNotFound, idNotFound } from '../service/errors/generateInfoError.js';
 import { Errors } from "../service/errors/errors.js";
@@ -9,7 +10,8 @@ export const getUsers = async (req, res, next) => {
         const users = await userModel.find();
 
         if (users) {
-            res.status(200).send({ respuesta: 'OK', mensaje: users });
+            const usersDto = users.map((user) => new UserDto(user));
+            res.status(200).send({ respuesta: 'OK', mensaje: usersDto });
         }
         else {
             CustomError.generateError({ status: 404, name: 'Error usuarios no encontrados', cause: dataNotFound('usuarios'), code: Errors.MISSING_DATA});
